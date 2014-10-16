@@ -17,6 +17,7 @@ ActiveAdmin.register Delayed::Job, :as => "Background Job" do
     job = Delayed::Job.find(params[:id])
     job.retry!
 
+    # TODO there has got to be a better way to get the helper prefix
     redirect_to self.send("#{ActiveAdmin.application.default_namespace}_background_jobs_path"), notice: "Retrying Job"
   end
 
@@ -55,10 +56,22 @@ ActiveAdmin.register Delayed::Job, :as => "Background Job" do
   end
 
   show do |job|
+    # customize handler + last_error fields
     attributes_table *(default_attribute_table_rows - [:handler, :last_error]) do
       row(:handler) { simple_format(job.handler) rescue "" }
       row(:last_error) { simple_format(job.last_error) rescue "" }
     end
+  end
+
+  # https://github.com/activeadmin/activeadmin/blob/9cfc45330e5ad31977b3ac7b2ccc1f8d6146c73f/lib/active_admin/views/pages/form.rb
+  form do |f|
+    f.inputs do
+      f.input :priority
+      f.input :handler
+      f.input :queue
+    end
+
+    f.actions
   end
 
 end
