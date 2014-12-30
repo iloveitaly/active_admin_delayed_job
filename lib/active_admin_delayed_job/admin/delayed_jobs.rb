@@ -28,8 +28,7 @@ ActiveAdmin.register Delayed::Job, :as => "Background Job" do
   index do     
     selectable_column                        
     column :id 
-    column :queue
-    column :priority
+    column :failed_at
     column :attempts
     
     column :status do |job|
@@ -66,12 +65,16 @@ ActiveAdmin.register Delayed::Job, :as => "Background Job" do
   # https://github.com/activeadmin/activeadmin/blob/9cfc45330e5ad31977b3ac7b2ccc1f8d6146c73f/lib/active_admin/views/pages/form.rb
   form do |f|
     f.inputs do
-      f.input :priority
       f.input :handler
-      f.input :queue
     end
 
     f.actions
+  end
+
+  member_action :update, method: :put do
+    resource.update_attribute(:handler, params[:background_job]["handler"])
+
+    redirect_to({ action: 'index' })
   end
 
 end
