@@ -57,8 +57,8 @@ ActiveAdmin.register Delayed::Job, :as => "Background Job" do
   show do |job|
     # customize handler + last_error fields
     attributes_table *(default_attribute_table_rows - [:handler, :last_error]) do
-      row(:handler) { simple_format(job.handler) rescue "" }
-      row(:last_error) { simple_format(job.last_error) rescue "" }
+      row(:handler) { content_tag(:pre, job.handler) rescue "" }
+      row(:last_error) { content_tag(:pre, job.last_error) rescue "" }
     end
   end
 
