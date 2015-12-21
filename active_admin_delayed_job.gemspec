@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "active_admin_delayed_job"
-  s.version     = "1.0.2"
+  s.version     = "1.0.3"
   s.authors     = ["Michael Bianco", "Darren Rush"]
   s.email       = ["mike@cliffsidemedia.com"]
   s.homepage    = "http://github.com/iloveitaly/active_admin_delayed_job"
